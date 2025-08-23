@@ -1,2 +1,69 @@
 # ResNet8-RISC-V
-Implementation of a ResNet-8 with INT8 precision on RISC-V (RV64). The project integrates low-level assembly and C optimizations for convolutional layers, including Strassen-based matrix multiplication, and provides cycle-accurate benchmarking for embedded performance evaluation.
+This repository contains the research project **"Low-Level Optimization of ResNet-8 on RISC-V"**, carried out at **Politecnico di Milano** under the supervision of Prof.Cristina Silvano, Chair of the Computer Science and Engineering Research Area at DEIB, as part of academic research activities in computer science engineering.  
+The project investigates instruction-level optimizations targeting the initial convolutional layer (Conv0) of a ResNet-8 architecture. 
+The implementation is carried out with INT8 precision on a RISC-V 64-bit bare-metal environment, emphasizing low-level control over instruction scheduling, memory accesses, and loop transformations. Both conventional convolution and Strassen-based matrix multiplication approaches are explored to evaluate their impact on execution efficiency.
+The study compares standard convolutional implementations with optimized versions and Strassen-based matrix multiplication, analyzing execution time in terms of hardware cycles.
+
+---
+
+## Repository Structure
+ResNet8-RISC-V/
+├── ResNet-8/
+│   ├── resnet8.c
+│   └── resnet8_strassen.c
+│
+├── Conv0/
+│   ├── C/
+│   │   └── Conv0_baseline.c
+│   │
+│   ├── Assembly RISC-V/
+│   │   ├── Conv0_v1.s
+│   │   ├── Conv0_v2.s
+│   │   └── data.s
+│   │
+│   └── Strassen/
+│       ├── Conv0_strassen_1lev.c
+│       └── Conv0_strassen_2lev.c
+│
+├── crt0.s
+└── link.ld
+---
+
+## Requirements
+-**RISC-V bare-metal toolchain**: riscv64-unknown-elf-gcc (assembler, linker, compiler) 
+- **Emulator**: [QEMU RISC-V](https://www.qemu.org/)  
+
+Make sure the RISC-V toolchain binaries are in your `$PATH`.
+
+---
+
+## Running C Implementations [Example with resnet8.c]
+# 1. Compile the C source into an object file
+riscv64-unknown-elf-gcc -O2 -march=rv64im_zicsr -mabi=lp64 -mcmodel=medany \ 
+-ffreestanding -fno-pic -fno-pie -c resnet8.c -o resnet8.o
+
+# 2. Link with the custom startup code and linker script
+riscv64-unknown-elf-gcc -nostdlib -nostartfiles -Wl,-T,link.ld crt0.o resnet8.o -o resnet8.elf -lgcc
+
+# 3. Run the program on QEMU (bare-metal environment)
+qemu-system-riscv64 -machine virt -cpu rv64 -nographic -bios none -serial mon:stdio -kernel resnet8.elf
+
+---
+
+## Running Assembly Implementations [Example with conv0_v2.s]
+# 1. Assemble the source files into object files
+riscv64-unknown-elf-as -march=rv64im_zicsr -mabi=lp64 -o conv0_v2.o Conv0/Assembly\ RISC-V/Conv0_v2.s
+riscv64-unknown-elf-as -march=rv64im_zicsr -mabi=lp64 -o data.o Conv0/Assembly\ RISC-V/data.s
+
+# 2. Link with the custom linker script
+riscv64-unknown-elf-ld -T link.ld -o conv0_v2.elf conv0_v2.o data.o
+
+# 3. Run the program on QEMU (bare-metal environment)
+qemu-system-riscv64 -machine virt -cpu rv64 -nographic -bios none -serial mon:stdio -kernel conv0_v2.elf
+
+---
+
+## License
+This project is released under the GNU General Public License v3.0 (GPL-3.0).
+
+
