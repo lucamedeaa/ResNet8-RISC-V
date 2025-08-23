@@ -57,6 +57,25 @@ qemu-system-riscv64 -machine virt -cpu rv64 -nographic -bios none -serial mon:st
 
 ---
 
+## Achieved Results
+
+Conv0 Performance Comparison
+
+Version	| Clock Cycles	| Speedup vs Baseline
+C-Baseline	| 5,185,128 |	–
+ASM v1 |	5,421,000 |	0.96×
+ASM v2	| 1,897,000	| 2.73×
+C-Strassen 1-level	| 3,528,368	| 1.47×
+C-Strassen 2-levels |	3,654,760,280 |	0.0014×
+
+ResNet-8 Performance Comparison
+
+Version |	Clock Cycles	| Speedup vs Baseline
+C-Baseline |	224,508,752	|–
+C-Strassen	|228,988,000	|0.98×
+
+---
+
 ## License
 This project is released under the GNU General Public License v3.0 (GPL-3.0).
 
