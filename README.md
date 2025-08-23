@@ -1,5 +1,5 @@
 # ResNet8-RISC-V
-This repository contains the research project **"Low-Level Optimization of ResNet-8 on RISC-V"**, carried out from Luca Medea at **Politecnico di Milano** under the supervision of Prof.Cristina Silvano, Chair of the Computer Science and Engineering Research Area at DEIB, as part of academic research activities in computer science engineering.  
+This repository contains the research project **"Low-Level Optimization of ResNet-8 on RISC-V"**, carried out from Luca Medea at **Politecnico di Milano** under the supervision of Prof. Cristina Silvano, Chair of the Computer Science and Engineering Research Area at DEIB, as part of academic research activities in computer science engineering.  
 The project investigates instruction-level optimizations targeting the initial convolutional layer (Conv0) of a ResNet-8 architecture. 
 The implementation is carried out with INT8 precision on a RISC-V 64-bit bare-metal environment, emphasizing low-level control over instruction scheduling, memory accesses, and loop transformations. Both conventional convolution and Strassen-based matrix multiplication approaches are explored to evaluate their impact on execution efficiency.
 The study compares standard convolutional implementations with optimized versions and Strassen-based matrix multiplication, analyzing execution time in terms of hardware cycles.
