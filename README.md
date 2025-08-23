@@ -7,26 +7,20 @@ The study compares standard convolutional implementations with optimized version
 ---
 
 ## Repository Structure
-ResNet8-RISC-V/
-├── ResNet-8/
-│   ├── resnet8.c
-│   └── resnet8_strassen.c
-│
-├── Conv0/
-│   ├── C/
-│   │   └── Conv0_baseline.c
-│   │
-│   ├── Assembly RISC-V/
-│   │   ├── Conv0_v1.s
-│   │   ├── Conv0_v2.s
-│   │   └── data.s
-│   │
-│   └── Strassen/
-│       ├── Conv0_strassen_1lev.c
-│       └── Conv0_strassen_2lev.c
-│
-├── crt0.s
-└── link.ld
+ResNet-8/: contains the full network implementations in C, including the standard baseline (resnet8.c) and the Strassen-enhanced version (resnet8_strassen.c).
+
+Conv0/: dedicated to the initial convolutional layer, with three subfolders:
+
+C/: includes the baseline implementation in C (Conv0_baseline.c).
+
+Assembly RISC-V/: provides the low-level assembly implementations (Conv0_v1.s, Conv0_v2.s) along with their data definitions (data.s).
+
+Strassen/: holds the convolutional implementations using Strassen’s algorithm, with both one-level (Conv0_strassen_1lev.c) and two-level (Conv0_strassen_2lev.c) versions.
+
+crt0.s: the startup code for bare-metal execution.
+
+link.ld: the linker script used to map sections in memory.
+
 ---
 
 ## Requirements
@@ -38,27 +32,27 @@ Make sure the RISC-V toolchain binaries are in your `$PATH`.
 ---
 
 ## Running C Implementations [Example with resnet8.c]
-# 1. Compile the C source into an object file
+ 1. Compile the C source into an object file
 riscv64-unknown-elf-gcc -O2 -march=rv64im_zicsr -mabi=lp64 -mcmodel=medany \ 
 -ffreestanding -fno-pic -fno-pie -c resnet8.c -o resnet8.o
 
-# 2. Link with the custom startup code and linker script
+ 2. Link with the custom startup code and linker script
 riscv64-unknown-elf-gcc -nostdlib -nostartfiles -Wl,-T,link.ld crt0.o resnet8.o -o resnet8.elf -lgcc
 
-# 3. Run the program on QEMU (bare-metal environment)
+ 3. Run the program on QEMU (bare-metal environment)
 qemu-system-riscv64 -machine virt -cpu rv64 -nographic -bios none -serial mon:stdio -kernel resnet8.elf
 
 ---
 
 ## Running Assembly Implementations [Example with conv0_v2.s]
-# 1. Assemble the source files into object files
+ 1. Assemble the source files into object files
 riscv64-unknown-elf-as -march=rv64im_zicsr -mabi=lp64 -o conv0_v2.o Conv0/Assembly\ RISC-V/Conv0_v2.s
 riscv64-unknown-elf-as -march=rv64im_zicsr -mabi=lp64 -o data.o Conv0/Assembly\ RISC-V/data.s
 
-# 2. Link with the custom linker script
+ 2. Link with the custom linker script
 riscv64-unknown-elf-ld -T link.ld -o conv0_v2.elf conv0_v2.o data.o
 
-# 3. Run the program on QEMU (bare-metal environment)
+ 3. Run the program on QEMU (bare-metal environment)
 qemu-system-riscv64 -machine virt -cpu rv64 -nographic -bios none -serial mon:stdio -kernel conv0_v2.elf
 
 ---
