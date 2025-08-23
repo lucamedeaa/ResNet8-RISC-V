@@ -11,11 +11,11 @@ ResNet-8/: contains the full network implementations in C, including the standar
 
 Conv0/: dedicated to the initial convolutional layer, with three subfolders:
 
-C/: includes the baseline implementation in C (Conv0_baseline.c).
+ - Conv0/C/: includes the baseline implementation in C (Conv0_baseline.c).
 
-Assembly RISC-V/: provides the low-level assembly implementations (Conv0_v1.s, Conv0_v2.s) along with their data definitions (data.s).
+ - Conv0/Assembly RISC-V/: provides the low-level assembly implementations (Conv0_v1.s, Conv0_v2.s) along with their data definitions (data.s).
 
-Strassen/: holds the convolutional implementations using Strassen’s algorithm, with both one-level (Conv0_strassen_1lev.c) and two-level (Conv0_strassen_2lev.c) versions.
+ - Conv0/Strassen/: holds the convolutional implementations using Strassen’s algorithm, with both one-level (Conv0_strassen_1lev.c) and two-level             (Conv0_strassen_2lev.c) versions.
 
 crt0.s: the startup code for bare-metal execution.
 
