@@ -17,6 +17,8 @@ Conv0/: dedicated to the initial convolutional layer, with three subfolders:
 
  - Strassen/: holds the convolutional implementations using Strassen’s algorithm, with both one-level (Conv0_strassen_1lev.c) and two-level             (Conv0_strassen_2lev.c) versions.
 
+Docs/: Includes supplementary material such as the Final Report
+
 crt0.s: the startup code for bare-metal execution.
 
 link.ld: the linker script used to map sections in memory.
@@ -92,8 +94,7 @@ In this sense, the present work does not aim to provide a definitive judgment on
 ---
 
 ## License
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License.  
-You may use, share, and adapt the material for **academic and research purposes**, but not for commercial use.  
+Low level optimization of a Convolutional Layer in ResNet-8 on RISC-V © 2025 by Luca Medea is licensed under CC BY-NC 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/4.0/
 
 [Read more about the license here](https://creativecommons.org/licenses/by-nc/4.0/).
 
