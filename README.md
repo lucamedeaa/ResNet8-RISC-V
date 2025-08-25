@@ -92,6 +92,9 @@ In this sense, the present work does not aim to provide a definitive judgment on
 ---
 
 ## License
-This project is released under the GNU General Public License v3.0 (GPL-3.0).
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License.  
+You may use, share, and adapt the material for **academic and research purposes**, but not for commercial use.  
+
+[Read more about the license here](https://creativecommons.org/licenses/by-nc/4.0/).
 
 
